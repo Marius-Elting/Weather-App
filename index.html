@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wetter App</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+    <input id="countryInput" type="text" placeholder="Country">
+    <input id="cityInput" type="text" placeholder="City">
+    <button type="button" onclick="showWeather()">Show Weather</button>
+    <div>
+        <h1>Wetter in <span id="city"></span></h1>
+        <div id="tempDiv">
+            <img id="imgOut" src="" alt="">
+            <p id="temperatur"></p>
+        </div>
+        <p id="description"></p>
+        <table>
+            <tr>
+                <th>Local Time</th>
+                <td id="localeTime"></td>
+            </tr>
+            <tr>
+                <th>Wind</th>
+                <td id="wind"></td>
+            </tr>
+            <tr>
+                <th>Cloudiness</th>
+                <td id="cloudiness"></td>
+            </tr>
+            <tr>
+                <th>Pressure</th>
+                <td id="pressure"></td>
+            </tr>
+            <tr>
+                <th>humidity</th>
+                <td id="humidity"></td>
+            </tr>
+            <tr>
+                <th>Sunrise</th>
+                <td id="sunrise"></td>
+            </tr>
+            <tr>
+                <th>Sunset</th>
+                <td id="sunset"></td>
+            </tr>
+            <tr>
+                <th>Geocords</th>
+                <td id="geocords"></td>
+            </tr>
+        </table>
+    </div>
+    <script src="./assets/js/main.js"></script>
+</body>
+
+</html>
