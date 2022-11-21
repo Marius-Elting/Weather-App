@@ -1,33 +1,4 @@
-// fetch("http://api.openweathermap.org/data/2.5/forecast?id=524901&appid={c41b8a39a3c402e02819bd223ee1f116}")
-//     .then(response => response.json())
-//     .then((data) => {
-//         console.log(data);
-//         console.log("first");
-//     });
 
-// fetch("http://api.openweathermap.org/geo/1.0/direct?q=Bocholt&limit=5&appid=c41b8a39a3c402e02819bd223ee1f116")
-//     .then(response => response.json())
-//     .then((data) => {
-//         console.log(data);
-//         console.log("first");
-//     });
-
-// fetch("https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=c41b8a39a3c402e02819bd223ee1f116")
-//     .then(response => response.json())
-//     .then((data) => {
-//         console.log(data);
-//         console.log("first");
-//     });
-
-// fetch("https://api.openweathermap.org/data/2.5/weather?q=" +
-//     "Bocholt" +
-//     "&units=metric&appid=" +
-//     "c41b8a39a3c402e02819bd223ee1f116")
-//     .then(response => response.json())
-//     .then((data) => {
-//         console.log(data);
-//         console.log("first");
-//     });
 let imgOut = document.getElementById("imgOut");
 let temperaturOut = document.getElementById("temperatur");
 let descriptionOut = document.getElementById("description");
@@ -52,17 +23,18 @@ async function showWeather() {
     // country = document.getElementById("countryInput").value;
     city = document.getElementById("cityInput").value;
     weatherCity.innerHTML = city;
+    // die nachfolgende Zeile ist nicht relevant, diese sind für 
     fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},${country}&limit=5&appid=c41b8a39a3c402e02819bd223ee1f116`)
         .then(response => response.json())
         .then(async (data) => {
-            console.log(data);
-            console.log("first");
-            lat = await data[0].lat;
-            lon = await data[0].lon;
-            console.log(lon);
-            console.log(lat);
-            lat = lat.toFixed(2);
-            lon = lon.toFixed(2);
+            // console.log(data);
+            // console.log("first");
+            // lat = await data[0].lat;
+            // lon = await data[0].lon;
+            // console.log(lon);
+            // console.log(lat);
+            // lat = lat.toFixed(2);
+            // lon = lon.toFixed(2);
             // api.openweathermap.org / data / 2.5 / weather ? lat = { lat } & lon={ lon; }& appid={API key; }
             // console.log(data[1].lat);
             // fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=c41b8a39a3c402e02819bd223ee1f116`)
@@ -110,10 +82,10 @@ async function showWeather() {
 
                     let localeTime = new Date().getTime();
                     let date = new Date(localeTime - 3600 * 1000 + data.timezone * 1000);
-                    let hours = date.getHours();
-                    let minutes = "0" + date.getMinutes();
-                    let seconds = "0" + date.getSeconds();
-                    let formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+                    let time = date.toLocaleTimeString();
+                    let today = date.toLocaleDateString();
+                    // let formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+                    let formattedTime = time + ", " + today;
 
                     temperaturOut.innerHTML = (data.main.temp - 274.15).toFixed(2) + "°C";
                     descriptionOut.innerHTML = data.weather[0].description;
