@@ -75,37 +75,37 @@ async function showWeather() {
                     console.log(data.main.temp - 274.15);
                     let i = data.wind.deg;
                     if (i >= 349 && i <= 11) {
-                        windDirection = +i + "° -=- N";
+                        windDirection = +i + "° -=- North";
                     } else if (i >= 12 && i <= 33) {
-                        windDirection = +i + "° -=- NNE";
+                        windDirection = +i + "° -=- North-Northeast";
                     } else if (i >= 34 && i <= 56) {
-                        windDirection = +i + "° -=- NE";
+                        windDirection = +i + "° -=- Northeast";
                     } else if (i >= 57 && i <= 78) {
-                        windDirection = +i + "° -=- ENE";
+                        windDirection = +i + "° -=- East-Northeast";
                     } else if (i >= 79 && i <= 101) {
-                        windDirection = +i + "° -=- E";
+                        windDirection = +i + "° -=- East";
                     } else if (i >= 102 && i <= 123) {
-                        windDirection = +i + "° -=- ESE";
+                        windDirection = +i + "° -=- East-Southeast";
                     } else if (i >= 124 && i <= 146) {
-                        windDirection = +i + "° -=- SE";
+                        windDirection = +i + "° -=- Southeast";
                     } else if (i >= 147 && i <= 168) {
-                        windDirection = +i + "° -=- SSE";
+                        windDirection = +i + "° -=- South-Southeast	";
                     } else if (i >= 169 && i <= 191) {
-                        windDirection = +i + "° -=- S";
+                        windDirection = +i + "° -=- South";
                     } else if (i >= 192 && i <= 213) {
-                        windDirection = +i + "° -=- SSW";
+                        windDirection = +i + "° -=- South-Southwest";
                     } else if (i >= 214 && i <= 236) {
-                        windDirection = +i + "° -=- SW";
+                        windDirection = +i + "° -=- Southwest";
                     } else if (i >= 237 && i <= 258) {
-                        windDirection = +i + "° -=- WSW";
+                        windDirection = +i + "° -=- West-Southwest	";
                     } else if (i >= 259 && i <= 281) {
-                        windDirection = +i + "° -=- W";
+                        windDirection = +i + "° -=- West";
                     } else if (i >= 282 && i <= 303) {
-                        windDirection = +i + "° -=- WNW";
+                        windDirection = +i + "° -=- West-Northwest	";
                     } else if (i >= 304 && i <= 326) {
-                        windDirection = +i + "° -=- NW";
+                        windDirection = +i + "° -=- Northwest";
                     } else if (i >= 327 && i <= 348) {
-                        windDirection = +i + "° -=- NNW";
+                        windDirection = +i + "° -=- North-Northwest	";
                     }
 
                     let localeTime = new Date().getTime();
@@ -123,7 +123,9 @@ async function showWeather() {
                     cloudOut.innerHTML = data.weather[0].description;
                     pressureOut.innerHTML = data.main.pressure + " hpa";
                     humidityOut.innerHTML = data.main.humidity + "%";
+
                     sunriseOut.innerHTML = (new Date(data.sys.sunrise * 1000 + data.timezone * 1000 - 3600 * 1000)).toLocaleTimeString(data.sys.country);
+
                     sunsetOut.innerHTML = (new Date(data.sys.sunset * 1000 + data.timezone * 1000 - 3600 * 1000)).toLocaleTimeString(data.sys.country);
                     geoCordsOut.innerHTML = ` [${lat}, ${lon}] `;
                     imgOut.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
