@@ -108,24 +108,23 @@ async function showWeather() {
                         windDirection = +i + "° -=- NNW";
                     }
 
+                    let localeTime = new Date().getTime();
+                    let date = new Date(localeTime - 3600 * 1000 + data.timezone * 1000);
+                    let hours = date.getHours();
+                    let minutes = "0" + date.getMinutes();
+                    let seconds = "0" + date.getSeconds();
+                    let formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
-                    let utc_time = new Date().getTime(data.timezone);
-                    console.log(utc_time);
-                    let time1 = utc_time;
-                    // console.log(new Date(time1));
-                    // console.log(data.timezone);
-                    // console.log(data.sys.country);
                     temperaturOut.innerHTML = (data.main.temp - 274.15).toFixed(2) + "°C";
                     descriptionOut.innerHTML = data.weather[0].description;
-                    timeOut.innerHTML = new Date(time1);
-                    // timeOut.innerHTML = utc_time;
+                    timeOut.innerHTML = formattedTime;
                     descriptionOut.innerHTML = data.weather[0].description;
                     windOut.innerHTML = data.wind.speed + " m/s " + windDirection;
                     cloudOut.innerHTML = data.weather[0].description;
                     pressureOut.innerHTML = data.main.pressure + " hpa";
                     humidityOut.innerHTML = data.main.humidity + "%";
-                    sunriseOut.innerHTML = (new Date(data.sys.sunrise * 1000)).toLocaleTimeString(data.sys.country);
-                    sunsetOut.innerHTML = (new Date(data.sys.sunset * 1000)).toLocaleTimeString(data.sys.country);
+                    sunriseOut.innerHTML = (new Date(data.sys.sunrise * 1000 + data.timezone * 1000 - 3600 * 1000)).toLocaleTimeString(data.sys.country);
+                    sunsetOut.innerHTML = (new Date(data.sys.sunset * 1000 + data.timezone * 1000 - 3600 * 1000)).toLocaleTimeString(data.sys.country);
                     geoCordsOut.innerHTML = ` [${lat}, ${lon}] `;
                     imgOut.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
                 });
