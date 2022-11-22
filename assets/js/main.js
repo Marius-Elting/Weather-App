@@ -11,7 +11,11 @@ let sunriseOut = document.getElementById("sunrise");
 let sunsetOut = document.getElementById("sunset");
 let geoCordsOut = document.getElementById("geocords");
 let weatherCity = document.getElementById("city");
-
+let cityInput = document.getElementById("cityInput");
+// let tds = Array.from(document.getElementsByTagName("td"));
+let table = document.querySelector("table");
+let tempdiv = document.getElementById("tempDiv");
+let headerH1 = document.getElementById("headerH1");
 let country = "germany";
 let city = "Bocholt";
 let lat;
@@ -19,12 +23,14 @@ let lon;
 let windDirection;
 
 
-async function showWeather() {
+
+
+function showWeather() {
     // country = document.getElementById("countryInput").value;
     city = document.getElementById("cityInput").value;
     weatherCity.innerHTML = city;
     // die nachfolgende Zeile ist nicht relevant, diese sind für 
-    // fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},${country}&limit=5&appid=c41b8a39a3c402e02819bd223ee1f116`)
+    // fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},${country}&limit=5&appid=APIKEY`)
     // .then(response => response.json())
     // let a = (() => {
     // console.log();
@@ -37,11 +43,24 @@ async function showWeather() {
     // lon = lon.toFixed(2);
     // api.openweathermap.org / data / 2.5 / weather ? lat = { lat } & lon={ lon; }& appid={API key; }
     // console.log(data[1].lat);
-    // fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=c41b8a39a3c402e02819bd223ee1f116`)
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=c41b8a39a3c402e02819bd223ee1f116`)
+    // fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=API Key`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=de&appid=c41b8a39a3c402e02819bd223ee1f116`)
         .then(response => response.json())
         .then((data) => {
             console.log(data);
+            table.style.opacity = "0";
+            headerH1.style.opacity = "0";
+            tempdiv.style.opacity = "0";
+            descriptionOut.style.opacity = "0";
+
+            if (data.cod == "404") {
+                console.log("undefinded");
+                setTimeout(() => {
+                    cityInput.value = "";
+                    alert("Leider konnte die eingegebene Stadt nicht gefunden Werden");
+                }, 100);
+                return;
+            }
             console.log(data.main.temp);
             console.log("first");
             console.log(data.main.temp - 274.15);
@@ -79,22 +98,37 @@ async function showWeather() {
             } else if (i >= 327 && i <= 348) {
                 windDirection = +i + "° -=- North-Northwest	";
             }
-
             let localeTime = new Date().getTime();
             let date = new Date(localeTime - 3600 * 1000 + data.timezone * 1000);
             let time = date.toLocaleTimeString();
             let today = date.toLocaleDateString();
             // let formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-            let formattedTime = time + ", " + today;
+            let formattedTime = time;
+            timeOut.innerHTML = formattedTime;
+            let clockInterval = setInterval(() => {
+                let localeTime = new Date().getTime();
+                let date = new Date(localeTime - 3600 * 1000 + data.timezone * 1000);
+                let time = date.toLocaleTimeString();
+                let today = date.toLocaleDateString();
+                // let formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+                let formattedTime = time;
+                timeOut.innerHTML = formattedTime;
+            }, 1000);
+
+            table.style.opacity = "1";
+            headerH1.style.opacity = "1";
+            tempdiv.style.opacity = "1";
+            descriptionOut.style.opacity = "1";
+
 
             temperaturOut.innerHTML = (data.main.temp - 274.15).toFixed(2) + "°C";
             descriptionOut.innerHTML = data.weather[0].description;
-            timeOut.innerHTML = formattedTime;
             descriptionOut.innerHTML = data.weather[0].description;
             windOut.innerHTML = data.wind.speed + " m/s " + windDirection;
             cloudOut.innerHTML = data.weather[0].description;
             pressureOut.innerHTML = data.main.pressure + " hpa";
             humidityOut.innerHTML = data.main.humidity + "%";
+
 
             sunriseOut.innerHTML = (new Date(data.sys.sunrise * 1000 + data.timezone * 1000 - 3600 * 1000)).toLocaleTimeString(data.sys.country);
 
@@ -108,3 +142,10 @@ async function showWeather() {
 
     ;
 }
+
+cityInput.addEventListener("keypress", (e) => {
+    if (e.key == "Enter") {
+        showWeather();
+    }
+    console.log(e.key);
+});

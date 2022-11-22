@@ -12,46 +12,48 @@
 <body>
     <section>
         <!-- <input id="countryInput" type="text" placeholder="Country"> -->
-        <input id="cityInput" type="text" placeholder="City">
-        <button type="button" onclick="showWeather()">Show Weather</button>
+        <div id="search">
+            <input id="cityInput" type="text" placeholder="Wie ist das Wetter in?">
+            <button type="button" onclick="showWeather()">🔍</button>
+        </div>
         <div>
-            <h1>Wetter in <span id="city"></span></h1>
+            <h1 id="headerH1">Wetter in <span id="city"></span><span id="localeTime"></span></h1>
             <div id="tempDiv">
                 <img id="imgOut" src="http://openweathermap.org/img/wn/01d@2x.png" alt="">
-                <p id="temperatur">-- °C</p>
+                <p id="temperatur">--<span> °C</span></p>
             </div>
-            <p id="description">--</p>
+            <p id="description"></p>
             <table>
-                <tr>
+                <!-- <tr>
                     <th>Local Time</th>
                     <td id="localeTime"></td>
-                </tr>
+                </tr> -->
                 <tr>
                     <th>Wind</th>
                     <td id="wind"></td>
                 </tr>
                 <tr>
-                    <th>Cloudiness</th>
+                    <th>Wolken</th>
                     <td id="cloudiness"></td>
                 </tr>
                 <tr>
-                    <th>Pressure</th>
+                    <th>Druck</th>
                     <td id="pressure"></td>
                 </tr>
                 <tr>
-                    <th>humidity</th>
+                    <th>Luftfeuchtigkeit</th>
                     <td id="humidity"></td>
                 </tr>
                 <tr>
-                    <th>Sunrise</th>
+                    <th>Sonnenaufgang</th>
                     <td id="sunrise"></td>
                 </tr>
                 <tr>
-                    <th>Sunset</th>
+                    <th>Sonnenuntergang</th>
                     <td id="sunset"></td>
                 </tr>
                 <tr>
-                    <th>Geocords</th>
+                    <th>GeoKoordinaten</th>
                     <td id="geocords"></td>
                 </tr>
             </table>
