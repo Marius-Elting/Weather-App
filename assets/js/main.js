@@ -21,7 +21,7 @@ let city = "Bocholt";
 let lat;
 let lon;
 let windDirection;
-
+let clockInterval
 
 
 
@@ -98,16 +98,21 @@ function showWeather() {
             } else if (i >= 327 && i <= 348) {
                 windDirection = +i + "° -=- North-Northwest	";
             }
+            console.log(data)
             let localeTime = new Date().getTime();
-            let date = new Date(localeTime - 3600 * 1000 + data.timezone * 1000);
+            let shift = 3600
+            if (new Date().getMonth() + 1 >= 4 || new Date().getMonth() + 1 <= 11) {
+                shift = 7200
+            }
+            let date = new Date(localeTime - shift * 1000 + data.timezone * 1000);
             let time = date.toLocaleTimeString();
             let today = date.toLocaleDateString();
-            // let formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
             let formattedTime = time;
             timeOut.innerHTML = formattedTime;
-            let clockInterval = setInterval(() => {
+            clearInterval(clockInterval)
+            clockInterval = setInterval(() => {
                 let localeTime = new Date().getTime();
-                let date = new Date(localeTime - 3600 * 1000 + data.timezone * 1000);
+                let date = new Date(localeTime - shift * 1000 + data.timezone * 1000);
                 let time = date.toLocaleTimeString();
                 let today = date.toLocaleDateString();
                 // let formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
