@@ -23,47 +23,25 @@ let lon;
 let windDirection;
 let clockInterval
 
-
-
 function showWeather() {
-    // country = document.getElementById("countryInput").value;
     city = document.getElementById("cityInput").value;
-    weatherCity.innerHTML = city;
-    // die nachfolgende Zeile ist nicht relevant, diese sind für 
-    // fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city},${country}&limit=5&appid=APIKEY`)
-    // .then(response => response.json())
-    // let a = (() => {
-    // console.log();
-    // console.log("first");
-    // lat = await data[0].lat;
-    // lon = await data[0].lon;
-    // console.log(lon);
-    // console.log(lat);
-    // lat = lat.toFixed(2);
-    // lon = lon.toFixed(2);
-    // api.openweathermap.org / data / 2.5 / weather ? lat = { lat } & lon={ lon; }& appid={API key; }
-    // console.log(data[1].lat);
-    // fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=API Key`)
+    weatherCity.textContent = city;
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=de&appid=c41b8a39a3c402e02819bd223ee1f116`)
         .then(response => response.json())
         .then((data) => {
-            console.log(data);
             table.style.opacity = "0";
             headerH1.style.opacity = "0";
             tempdiv.style.opacity = "0";
             descriptionOut.style.opacity = "0";
 
             if (data.cod == "404") {
-                console.log("undefinded");
+
                 setTimeout(() => {
                     cityInput.value = "";
                     alert("Leider konnte die eingegebene Stadt nicht gefunden Werden");
                 }, 100);
                 return;
             }
-            console.log(data.main.temp);
-            console.log("first");
-            console.log(data.main.temp - 274.15);
             let i = data.wind.deg;
             if (i >= 349 && i <= 11) {
                 windDirection = +i + "° -=- North";
@@ -98,7 +76,6 @@ function showWeather() {
             } else if (i >= 327 && i <= 348) {
                 windDirection = +i + "° -=- North-Northwest	";
             }
-            console.log(data)
             let localeTime = new Date().getTime();
             let shift = 3600
             if (new Date().getMonth() + 1 >= 4 || new Date().getMonth() + 1 <= 11) {
@@ -108,7 +85,7 @@ function showWeather() {
             let time = date.toLocaleTimeString();
             let today = date.toLocaleDateString();
             let formattedTime = time;
-            timeOut.innerHTML = formattedTime;
+            timeOut.textContent = formattedTime;
             clearInterval(clockInterval)
             clockInterval = setInterval(() => {
                 let localeTime = new Date().getTime();
@@ -117,7 +94,7 @@ function showWeather() {
                 let today = date.toLocaleDateString();
                 // let formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
                 let formattedTime = time;
-                timeOut.innerHTML = formattedTime;
+                timeOut.textContent = formattedTime;
             }, 1000);
 
             table.style.opacity = "1";
@@ -126,31 +103,25 @@ function showWeather() {
             descriptionOut.style.opacity = "1";
 
 
-            temperaturOut.innerHTML = (data.main.temp - 274.15).toFixed(2) + "°C";
-            descriptionOut.innerHTML = data.weather[0].description;
-            descriptionOut.innerHTML = data.weather[0].description;
-            windOut.innerHTML = data.wind.speed + " m/s " + windDirection;
-            cloudOut.innerHTML = data.weather[0].description;
-            pressureOut.innerHTML = data.main.pressure + " hpa";
-            humidityOut.innerHTML = data.main.humidity + "%";
+            temperaturOut.textContent = (data.main.temp - 274.15).toFixed(2) + "°C";
+            descriptionOut.textContent = data.weather[0].description;
+            descriptionOut.textContent = data.weather[0].description;
+            windOut.textContent = data.wind.speed + " m/s " + windDirection;
+            cloudOut.textContent = data.weather[0].description;
+            pressureOut.textContent = data.main.pressure + " hpa";
+            humidityOut.textContent = data.main.humidity + "%";
 
 
-            sunriseOut.innerHTML = (new Date(data.sys.sunrise * 1000 + data.timezone * 1000 - 3600 * 1000)).toLocaleTimeString(data.sys.country);
+            sunriseOut.textContent = (new Date(data.sys.sunrise * 1000 + data.timezone * 1000 - 3600 * 1000)).toLocaleTimeString(data.sys.country);
 
-            sunsetOut.innerHTML = (new Date(data.sys.sunset * 1000 + data.timezone * 1000 - 3600 * 1000)).toLocaleTimeString(data.sys.country);
-            geoCordsOut.innerHTML = ` [${data.coord.lat}, ${data.coord.lon}] `;
+            sunsetOut.textContent = (new Date(data.sys.sunset * 1000 + data.timezone * 1000 - 3600 * 1000)).toLocaleTimeString(data.sys.country + "-" + data.sys.country.toLowerCase());
+            geoCordsOut.textContent = ` [${data.coord.lat}, ${data.coord.lon}] `;
             imgOut.src = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
         });
-
-
-    // });
-
-    ;
 }
 
 cityInput.addEventListener("keypress", (e) => {
     if (e.key == "Enter") {
         showWeather();
     }
-    console.log(e.key);
 });
